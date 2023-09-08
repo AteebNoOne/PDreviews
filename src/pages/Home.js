@@ -1,18 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import { Button, Typography, Box, Grid, Rating, CircularProgress } from '@mui/material';
-import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
-import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
-
+import { Typography, Box, Rating, Link, CircularProgress } from '@mui/material';
+import studentsData from '../students.json'
 const carouselContainerStyle = {
   maxWidth: '600px',
   margin: '0 auto',
   textAlign: 'center',
+  position: 'relative',
 };
 
 const imageStyle = {
-  height: '250px',
+  height: '230px',
   width: '100%',
 };
 
@@ -26,22 +25,14 @@ const slideContentStyle = {
 const Home = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
+  const [isLoading, setIsLoading] = useState(true); // Track loading state
   const carouselRef = useRef(null);
-  const [slides, setSlides] = useState([]);
-  const [isLoading, setIsLoading] = useState(true); // Initialize isLoading as true
+  const slides = studentsData; // Use the imported JSON data
 
   useEffect(() => {
-    // Fetch the data from the online source
-    fetch('https://ateebnoone.github.io/PDreviews/students.json')
-      .then((response) => response.json())
-      .then((data) => {
-        setSlides(data);
-        setIsLoading(false); // Set isLoading to false after data is loaded
-      })
-      .catch((error) => {
-        console.error('Error fetching data:', error);
-        setIsLoading(false); // Set isLoading to false in case of an error
-      });
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
 
     const interval = setInterval(() => {
       if (!isHovered) {
@@ -55,87 +46,71 @@ const Home = () => {
     };
   }, [currentSlide, isHovered, slides]);
 
-  const handlePrevClick = () => {
-    const prevSlide = (currentSlide - 1 + slides.length) % slides.length;
-    setCurrentSlide(prevSlide);
-  };
-
-  const handleNextClick = () => {
-    const nextSlide = (currentSlide + 1) % slides.length;
-    setCurrentSlide(nextSlide);
-  };
-
   return (
     <div
       style={carouselContainerStyle}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {isLoading ? ( // Display loading circle when isLoading is true
-        <CircularProgress size={60} />
-      ) : (
-        <Carousel
-          axis='vertical'
-          autoFocus={true}
-          centerMode={true}
-          dynamicHeight={true}
-          showArrows={true}
-          showStatus={true}
-          showIndicators={true}
-          showThumbs={true}
-          thumbWidth={275}
-          selectedItem={currentSlide}
-          ref={carouselRef}
-        >
-          {slides.map((slide, index) => (
-            <div key={index}>
-              <img loading='lazy' src={slide.image} alt={slide.name} style={imageStyle} />
-              <div style={slideContentStyle}>
-                <Typography variant="h6" component="div" sx={{ fontWeight: 'bold' }}>
-                  {slide.name}
-                </Typography>
-                <Typography variant="body2" component="div">
-                  {slide.reviewText}
-                </Typography>
-                <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                  <Rating
-                    name={`stars-${index}`}
-                    value={slide.reviewStars}
-                    readOnly
-                    max={5}
-                  />
-                </Box>
+      {isLoading ? ( 
+        <div>
+          <CircularProgress size={150}/>
+          <Typography variant="body2" component="div">
+            Loading...
+          </Typography>
+        </div>
+      ) : ( 
+        <div>
+          <Carousel
+            axis='vertical'
+            autoFocus={true}
+            centerMode={true}
+            dynamicHeight={true}
+            showArrows={true}
+            showStatus={true}
+            showIndicators={true}
+            showThumbs={true}
+            thumbWidth={275}
+            selectedItem={currentSlide}
+            ref={carouselRef}
+          >
+            {slides.map((slide, index) => (
+              <div key={index}>
+                <img loading='lazy' src={slide.image} alt={slide.name} style={imageStyle} />
+                <div style={slideContentStyle}>
+                  <Typography variant="h6" component="div" sx={{ fontWeight: 'bold' }}>
+                    {slide.name}
+                  </Typography>
+                  <Typography variant="body2" component="div">
+                    {slide.reviewText}
+                  </Typography>
+                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                    <Rating
+                      name={`stars-${index}`}
+                      value={slide.reviewStars}
+                      readOnly
+                      max={5}
+                    />
+                  </Box>
+                </div>
               </div>
-            </div>
-          ))}
-        </Carousel>
+            ))}
+          </Carousel>
+
+          <Typography variant="body2" component="div">
+            By{' '}
+            <Link
+              href="https://github.com/ateebNoOne/"
+              target="_blank"
+              rel="noopener noreferrer"
+              color="inherit"
+            >
+              Atib Ur Rehman 16417
+            </Link>{' '}
+            with love ❤️
+          </Typography>
+        </div>
       )}
-      <Box mt={2}>
-        <Grid container spacing={2} justifyContent="center">
-          <Grid item>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handlePrevClick}
-              startIcon={<KeyboardArrowLeftIcon />}
-              disabled={isLoading} // Disable the button when isLoading is true
-            >
-              Prev
-            </Button>
-          </Grid>
-          <Grid item>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleNextClick}
-              endIcon={<KeyboardArrowRightIcon />}
-              disabled={isLoading} // Disable the button when isLoading is true
-            >
-              Next
-            </Button>
-          </Grid>
-        </Grid>
-      </Box>
     </div>
   );
 };
