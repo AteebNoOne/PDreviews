@@ -4,5 +4,12 @@
     width: 230px;
     border-radius: 50%;
     object-fit: cover;
-  }
-  
+}
+
+h1{
+    text-align: center;
+}
+.footer-t {
+    text-align: center;
+    margin-top: "100px";
+}

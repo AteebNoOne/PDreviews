@@ -5,21 +5,22 @@ import {
   Typography,
   Link,
   CircularProgress,
-  IconButton, 
-  ArrowBack, 
-  ArrowForward, 
+  IconButton,
 } from '@mui/material';
-import studentsData from '../students.json'
+import './Home.css'
+import studentsData from '../students.json';
+
+const defaultImageUrl = '';
 
 const carouselContainerStyle = {
-  maxWidth: '600px',
+  maxWidth: '400px',
   margin: '0 auto',
   textAlign: 'center',
   position: 'relative',
 };
 
 const imageStyle = {
-  height: '230px',
+  height: '400px',
   width: '100%',
 };
 
@@ -81,92 +82,96 @@ const Home = () => {
   }, [currentSlide, isHovered, slides]);
 
   const handlePrevClick = () => {
-    // Move to the previous slide
     const prevSlide = (currentSlide - 1 + slides.length) % slides.length;
     setCurrentSlide(prevSlide);
   };
 
   const handleNextClick = () => {
-    // Move to the next slide
     const nextSlide = (currentSlide + 1) % slides.length;
     setCurrentSlide(nextSlide);
   };
 
- 
   return (
-    <div
-      style={carouselContainerStyle}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      {/* Add the "prev" button */}
-      <IconButton
-        style={prevButtonStyle}
-        onClick={handlePrevClick}
+    <>
+      <h1>Personal development reviews</h1>
+      <div
+        style={carouselContainerStyle}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
       >
-        Prev
-      </IconButton>
+        <IconButton
+          style={prevButtonStyle}
+          onClick={handlePrevClick}
+        >
+          Prev
+        </IconButton>
 
-      {isLoading ? (
-        <div>
-          <CircularProgress size={150} />
-          <Typography variant="body2" component="div">
-            Loading...
-          </Typography>
-        </div>
-      ) : (
-        <div>
-          <Carousel
-            axis='vertical'
-            autoFocus={true}
-            centerMode={true}
-            dynamicHeight={true}
-            showArrows={true}
-            showStatus={true}
-            showIndicators={true}
-            showThumbs={true}
-            thumbWidth={275}
-            selectedItem={currentSlide}
-            ref={carouselRef}
-          >
-            {slides.map((slide, index) => (
-              <div key={index}>
-                <img loading='lazy' src={slide.image} alt={slide.name} style={imageStyle} />
-                <div style={slideContentStyle}>
-                  <Typography variant="h6" component="div" sx={{ fontWeight: 'bold' }}>
-                    {slide.name}
-                  </Typography>
-                  <Typography variant="body2" component="div">
-                    {slide.reviewText}
-                  </Typography>
-                </div>
-              </div>
-            ))}
-          </Carousel>
-
-          <Typography variant="body2" component="div">
-            By{' '}
-            <Link
-              href="https://github.com/ateebNoOne/"
-              target="_blank"
-              rel="noopener noreferrer"
-              color="inherit"
+        {isLoading ? (
+          <div>
+            <CircularProgress size={150} />
+            <Typography variant="body2" component="div">
+              Loading...
+            </Typography>
+          </div>
+        ) : (
+          <div>
+            <Carousel
+              axis='vertical'
+              autoFocus={true}
+              centerMode={true}
+              dynamicHeight={true}
+              showArrows={true}
+              showStatus={true}
+              showIndicators={true}
+              showThumbs={false}
+              thumbWidth={275}
+              selectedItem={currentSlide}
+              ref={carouselRef}
             >
-              Atib Ur Rehman 16417
-            </Link>{' '}
-            with love ❤️
-          </Typography>
-        </div>
-      )}
+              {slides.map((slide, index) => (
+                <div key={index}>
+                  <img
+                    loading='lazy'
+                    src={slide.image || defaultImageUrl} // Use the default image if the image URL is null
+                    alt={slide.name}
+                    style={imageStyle}
+                  />
+                  <div style={slideContentStyle}>
+                    <Typography variant="h6" component="div" sx={{ fontWeight: 'bold', fontSize: '24px' }}>
+                      {slide.name}
+                    </Typography>
+                    <Typography variant="body2" component="div" sx={{ fontSize: '16px', color: 'blue' }}>
+                      {slide.reviewText}
+                    </Typography>
 
-      {/* Add the "next" button */}
-      <IconButton
-        style={nextButtonStyle}
-        onClick={handleNextClick}
-      >
-        Next
-      </IconButton>
-    </div>
+                  </div>
+                </div>
+              ))}
+            </Carousel>
+          </div>
+        )}
+        <IconButton
+          style={nextButtonStyle}
+          onClick={handleNextClick}
+        >
+          Next
+        </IconButton>
+      </div>
+      <div className='footer-t'>
+        <Typography >
+          By{' '}
+          <Link
+            href="https://github.com/ateebNoOne/"
+            target="_blank"
+            rel="noopener noreferrer"
+            color="inherit"
+          >
+            Atib Ur Rehman 16417
+          </Link>{' '}
+          with love ❤️
+        </Typography>
+      </div>
+    </>
   );
 };
 
