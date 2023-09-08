@@ -20,7 +20,7 @@ const carouselContainerStyle = {
 };
 
 const imageStyle = {
-  height: '400px',
+  height: '350px',
   width: '100%',
 };
 
@@ -45,6 +45,12 @@ const buttonStyle = {
   width: '40px',
   height: '40px',
   fontSize: '18px',
+};
+
+const reviewTextStyle = {
+  maxHeight: '100px', // Adjust the maximum height as needed
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
 };
 
 const prevButtonStyle = {
@@ -128,25 +134,26 @@ const Home = () => {
               selectedItem={currentSlide}
               ref={carouselRef}
             >
-              {slides.map((slide, index) => (
-                <div key={index}>
-                  <img
-                    loading='lazy'
-                    src={slide.image || defaultImageUrl} // Use the default image if the image URL is null
-                    alt={slide.name}
-                    style={imageStyle}
-                  />
-                  <div style={slideContentStyle}>
-                    <Typography variant="h6" component="div" sx={{ fontWeight: 'bold', fontSize: '24px' }}>
-                      {slide.name}
-                    </Typography>
-                    <Typography variant="body2" component="div" sx={{ fontSize: '16px', color: 'blue' }}>
-                      {slide.reviewText}
-                    </Typography>
+{slides.map((slide, index) => (
+  <div key={index}>
+    <img
+      loading="lazy"
+      src={slide.image || defaultImageUrl}
+      alt={slide.name}
+      style={imageStyle}
+    />
+    <div style={slideContentStyle}>
+      <Typography variant="h6" component="div" sx={{ fontWeight: 'bold', fontSize: '24px' }}>
+        {slide.name}
+      </Typography>
+      <Typography variant="body2" component="div" sx={{ fontSize: '16px', color: 'blue' }}>
+        <div style={reviewTextStyle}>{slide.reviewText}</div>
+      </Typography>
+    </div>
+  </div>
+))}
 
-                  </div>
-                </div>
-              ))}
+
             </Carousel>
           </div>
         )}

@@ -22,7 +22,7 @@
     {
         "image": "https://ateebnoone.github.io/PDreviews/src/assets/faisal.jpg",
         "name": "Faisal Shakeel",
-        "reviewText": "Don't know you much but you're good when its a debate about Islam."
+        "reviewText": "You're good when its a debate about Islam."
     },
     {
         "image": "https://ateebnoone.github.io/PDreviews/src/assets/default.png",
@@ -38,5 +38,45 @@
         "image": "https://ateebnoone.github.io/PDreviews/src/assets/default.png",
         "name": "Saman",
         "reviewText": "Programmer? too curious to know what you code."
+    },
+    {
+        "image": "https://ateebnoone.github.io/PDreviews/src/assets/default.png",
+        "name": "Kainat Muzaffar",
+        "reviewText": "Liked the way you walked during presentation."
+    },
+    {
+        "image": "https://ateebnoone.github.io/PDreviews/src/assets/default.png",
+        "name": "Qurat Ul Ain",
+        "reviewText": "You are so helping."
+    },
+    {
+        "image": "https://ateebnoone.github.io/PDreviews/src/assets/default.png",
+        "name": "Rao",
+        "reviewText": "Your curly hair looks great."
+    },
+    {
+        "image": "https://ateebnoone.github.io/PDreviews/src/assets/default.png",
+        "name": "Shehroz",
+        "reviewText": "Your beard is good"
+    },
+    {
+        "image": "https://ateebnoone.github.io/PDreviews/src/assets/default.png",
+        "name": "Joel",
+        "reviewText": "Future singer."
+    },
+    {
+        "image": "https://ateebnoone.github.io/PDreviews/src/assets/default.png",
+        "name": "Faseeh Ur Rehman",
+        "reviewText": "You know how to talk."
+    },
+    {
+        "image": "https://ateebnoone.github.io/PDreviews/src/assets/default.png",
+        "name": "Sadia",
+        "reviewText": "You are total cute."
+    },
+    {
+        "image": "https://ateebnoone.github.io/PDreviews/src/assets/asad.jpg",
+        "name": "Asad",
+        "reviewText": "You think alot."
     }
 ]

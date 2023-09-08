@@ -13,3 +13,10 @@ h1{
     text-align: center;
     margin-top: "100px";
 }
+/* Add this to your Home.css or a separate CSS file */
+.reviewText {
+    max-height: 100px; /* Adjust the maximum height as needed */
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
