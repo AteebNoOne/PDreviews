@@ -1,0 +1,20 @@
+[
+    {
+        "image": "https://www.insperity.com/wp-content/uploads/Employee_development_1200x630.png",
+        "name": "Slide 1",
+        "reviewText": "This is the review text for Slide 1",
+        "reviewStars": 2
+    },
+    {
+        "image": "https://www.pacific-research.com/wp-content/uploads/2020/04/shutterstock_251380513.jpg",
+        "name": "Slide 2",
+        "reviewText": "This is the review text for Slide 2",
+        "reviewStars": 3
+    },
+    {
+        "image": "https://etimg.etb2bimg.com/photo/84575476.cms",
+        "name": "Slide 3",
+        "reviewText": "This is the review text for Slide 3",
+        "reviewStars": 4
+    }
+]
