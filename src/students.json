@@ -23,5 +23,15 @@
         "image": "https://ateebnoone.github.io/PDreviews/src/assets/faisal.jpg",
         "name": "Faisal Shakeel",
         "reviewText": "Don't know you much but you're good when its a debate about Islam."
+    },
+    {
+        "image": "https://ateebnoone.github.io/PDreviews/src/assets/default.png",
+        "name": "Momin",
+        "reviewText": "I like your confidence."
+    },
+    {
+        "image": "https://ateebnoone.github.io/PDreviews/src/assets/default.png",
+        "name": "Syed Abdullah Jawad",
+        "reviewText": "Way you explain things is cute."
     }
 ]
