@@ -18,5 +18,10 @@
         "image": "https://ateebnoone.github.io/PDreviews/src/assets/usman.jpg",
         "name": "Usman Alam khan",
         "reviewText": "You are so friendly. I like your creativity too."
+    },
+    {
+        "image": "https://ateebnoone.github.io/PDreviews/src/assets/faisal.jpg",
+        "name": "Faisal Shakeel",
+        "reviewText": "Don't know you much but you're good to talk about Islam."
     }
 ]
