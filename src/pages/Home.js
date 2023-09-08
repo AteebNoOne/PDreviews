@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import { Button, Typography, Box, Grid, Rating } from '@mui/material';
+import { Button, Typography, Box, Grid, Rating, CircularProgress } from '@mui/material';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 
@@ -12,8 +12,8 @@ const carouselContainerStyle = {
 };
 
 const imageStyle = {
-  height: '250px', 
-  width: '100%', 
+  height: '250px',
+  width: '100%',
 };
 
 const slideContentStyle = {
@@ -23,36 +23,26 @@ const slideContentStyle = {
   justifyContent: 'center',
 };
 
-const slides = [
-  {
-    image:
-      'https://www.insperity.com/wp-content/uploads/Employee_development_1200x630.png',
-    name: 'Slide 1',
-    reviewText: 'This is the review text for Slide 1',
-    reviewStars: 2,
-  },
-  {
-    image:
-      'https://www.pacific-research.com/wp-content/uploads/2020/04/shutterstock_251380513.jpg',
-    name: 'Slide 2',
-    reviewText: 'This is the review text for Slide 2',
-    reviewStars: 3,
-  },
-  {
-    image:
-      'https://etimg.etb2bimg.com/photo/84575476.cms',
-    name: 'Slide 3',
-    reviewText: 'This is the review text for Slide 3',
-    reviewStars: 4,
-  },
-];
-
 const Home = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const carouselRef = useRef(null);
+  const [slides, setSlides] = useState([]);
+  const [isLoading, setIsLoading] = useState(true); // Initialize isLoading as true
 
   useEffect(() => {
+    // Fetch the data from the online source
+    fetch('https://ateebnoone.github.io/PDreviews/students.json')
+      .then((response) => response.json())
+      .then((data) => {
+        setSlides(data);
+        setIsLoading(false); // Set isLoading to false after data is loaded
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+        setIsLoading(false); // Set isLoading to false in case of an error
+      });
+
     const interval = setInterval(() => {
       if (!isHovered) {
         const nextSlide = (currentSlide + 1) % slides.length;
@@ -63,7 +53,7 @@ const Home = () => {
     return () => {
       clearInterval(interval);
     };
-  }, [currentSlide, isHovered]);
+  }, [currentSlide, isHovered, slides]);
 
   const handlePrevClick = () => {
     const prevSlide = (currentSlide - 1 + slides.length) % slides.length;
@@ -81,41 +71,45 @@ const Home = () => {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <Carousel
-        axis='vertical'
-        autoFocus={true}
-        centerMode={true}
-        dynamicHeight={true}
-        showArrows={true}
-        showStatus={true}
-        showIndicators={true}
-        showThumbs={true}
-        thumbWidth={275}
-        selectedItem={currentSlide}
-        ref={carouselRef}
-      >
-        {slides.map((slide, index) => (
-          <div key={index}>
-            <img loading='lazy' src={slide.image} alt={slide.name} style={imageStyle} />
-            <div style={slideContentStyle}>
-              <Typography variant="h6" component="div" sx={{ fontWeight: 'bold' }}>
-                {slide.name}
-              </Typography>
-              <Typography variant="body2" component="div">
-                {slide.reviewText}
-              </Typography>
-              <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <Rating
-                  name={`stars-${index}`}
-                  value={slide.reviewStars}
-                  readOnly
-                  max={5}
-                />
-              </Box>
+      {isLoading ? ( // Display loading circle when isLoading is true
+        <CircularProgress size={60} />
+      ) : (
+        <Carousel
+          axis='vertical'
+          autoFocus={true}
+          centerMode={true}
+          dynamicHeight={true}
+          showArrows={true}
+          showStatus={true}
+          showIndicators={true}
+          showThumbs={true}
+          thumbWidth={275}
+          selectedItem={currentSlide}
+          ref={carouselRef}
+        >
+          {slides.map((slide, index) => (
+            <div key={index}>
+              <img loading='lazy' src={slide.image} alt={slide.name} style={imageStyle} />
+              <div style={slideContentStyle}>
+                <Typography variant="h6" component="div" sx={{ fontWeight: 'bold' }}>
+                  {slide.name}
+                </Typography>
+                <Typography variant="body2" component="div">
+                  {slide.reviewText}
+                </Typography>
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                  <Rating
+                    name={`stars-${index}`}
+                    value={slide.reviewStars}
+                    readOnly
+                    max={5}
+                  />
+                </Box>
+              </div>
             </div>
-          </div>
-        ))}
-      </Carousel>
+          ))}
+        </Carousel>
+      )}
       <Box mt={2}>
         <Grid container spacing={2} justifyContent="center">
           <Grid item>
@@ -124,6 +118,7 @@ const Home = () => {
               color="primary"
               onClick={handlePrevClick}
               startIcon={<KeyboardArrowLeftIcon />}
+              disabled={isLoading} // Disable the button when isLoading is true
             >
               Prev
             </Button>
@@ -134,6 +129,7 @@ const Home = () => {
               color="primary"
               onClick={handleNextClick}
               endIcon={<KeyboardArrowRightIcon />}
+              disabled={isLoading} // Disable the button when isLoading is true
             >
               Next
             </Button>
