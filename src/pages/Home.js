@@ -12,8 +12,8 @@ const carouselContainerStyle = {
 };
 
 const imageStyle = {
-  height: '250px', // Set your desired height
-  width: '100%', // Maintain the aspect ratio
+  height: '250px', 
+  width: '100%', 
 };
 
 const slideContentStyle = {
